@@ -10,6 +10,8 @@
     </el-steps>
 
     <!--课程章节列表 TODO-->
+    <!--课程章节列表-->
+    <ChapterList :course-id="courseId" />
 
     <div style="text-align:center">
       <el-button @click="previous">上一步</el-button>
@@ -21,14 +23,19 @@
 <script>
 import course from '@/api/edu/course'
 import subject from '@/api/edu/subject'
+// 引入组件
+import ChapterList from '@/views/edu/course/components/ChapterList'
 
 export default {
+  // 注册组件
+  components: { ChapterList },
   data() {
     return {
       active: 1,
       saveBtnDisabled: false, // 保存按钮是否禁用
       courseId: '',
       subjectNestedList: []
+
     }
   },
 
