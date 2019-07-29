@@ -191,12 +191,14 @@ export default {
     },
 
     initTeacherList() {
+      console.log('加载讲师。。。。。。。。。。。。。。')
       teacher.getList().then(response => {
         this.teacherList = response.data.rows
       })
     },
 
     initSubjectList() {
+      console.log('加载课程分类。。。。。')
       subject.getNestedTreeList().then(response => {
         this.subjectNestedList = response.data.items
       })

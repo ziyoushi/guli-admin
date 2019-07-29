@@ -141,6 +141,7 @@ export default {
       if (this.$route.params && this.$route.params.id) {
         const id = this.$route.params.id
         console.log(id)
+        this.fetchCourseInfoById(id)
       } else {
         this.courseInfo = { ...defaultForm }
 
@@ -174,13 +175,30 @@ export default {
     },
     updateData() {
       this.saveBtnDisabled = true
-      course.updateCourseInfoById().then(response => {
+      console.log('进入到修改方法。。。。。')
+      course.updateCourseInfoById(this.courseInfo).then(response => {
         this.$message({
           type: 'success',
           message: '修改成功!'
         })
       }).then(() => {
-        this.$router.push({ path: '/edu/course/chapter/1' })
+        this.$router.push({ path: '/edu/course/chapter/' + this.courseInfo.id })
+      })
+    },
+    fetchCourseInfoById(id) {
+      course.getCourseInfoById(id).then(response => {
+        this.courseInfo = response.data.item
+
+        subject.getNestedTreeList().then(response => {
+          this.subjectNestedList = response.data.items
+
+          for (let i = 0; i < this.subjectNestedList.length; i++) {
+            if (this.subjectNestedList[i].id === this.courseInfo.subjectParentId) {
+              this.subSubjectList = this.subjectNestedList[i].children
+              // this.courseInfo.subjectId = ''
+            }
+          }
+        })
       })
     },
     initSubjectList() {

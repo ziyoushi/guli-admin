@@ -34,6 +34,7 @@ export default {
   },
 
   updateById(chapter) {
+    console.log('准备去调后端的更新')
     return request({
       url: `${api_name}/${chapter.id}`,
       method: 'put',
